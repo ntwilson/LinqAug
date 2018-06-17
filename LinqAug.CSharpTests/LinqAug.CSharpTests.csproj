@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="mstest.testAdapter" Version="1.3.2" />
+    <PackageReference Include="mstest.testFramework" Version="1.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LinqAug\LinqAug.fsproj" />
+  </ItemGroup>
+
+</Project>
