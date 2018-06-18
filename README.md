@@ -8,7 +8,7 @@ Additional extensions to the F# Seq, List, and Array modules.
 
 Provides a safe way to access up to the first five elements of an `IEnumerable<T>`.  Instead of using indexing or `.ElementAt(i)`, which could throw an Exception if improperly used, the `.Match` extension method lets you check the length of the enumerable at the same time as accessing the values.
 
-```c#
+```C#
 var (pathToLook, fileNameMask, extensionFilter) = 
   commandLineArgs.Match(
     threeOrMore: (path, mask, filter, rest) => (path, mask, filter),
@@ -17,6 +17,24 @@ var (pathToLook, fileNameMask, extensionFilter) =
                                                 + "Expecting at least two arguments.")
   );
 ```
+
+
+
+#### `.To`
+
+Provides a convenient syntax for making ranges.  Works with integers and doubles.  Two syntaxes are available:
+
+```C#
+var twelveVals = 1.To(12)
+```
+
+and:
+
+```C#
+var sixOddVals = 1.Step(2).To(11)
+```
+
+
 
 
 
