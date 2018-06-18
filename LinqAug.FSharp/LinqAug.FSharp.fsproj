@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin\$(Configuration)\netstandard2.0\$(AssemblyName).XML</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LinqAug\LinqAug.fsproj" />
+    <ProjectReference Include="..\LinqAug.FSharp\LinqAug.FSharp.fsproj" />
+    <ProjectReference Include="..\LinqAug.CSharp\LinqAug.CSharp.csproj" />
   </ItemGroup>
 
 </Project>
