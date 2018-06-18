@@ -1,6 +1,7 @@
-# LinqAug
-Additional extension methods for C# Enumerables inspired by LINQ.
-Additional extensions to the F# Seq, List, and Array modules.
+# LINQED
+LINQ Extended Design
+
+This library contains additional extension methods for C# Enumerables inspired by LINQ, as well as extensions to the F# Seq, List, and Array modules.
 
 ## C# Extensions
 
