@@ -24,11 +24,11 @@ type Range() =
   static member To (a:int, b:int) : int seq =
     upcast [a .. b]
 
-  [<Extension>]
   /// <summary>
   /// Returns an IEnumerable that ranges from the lower bound to the 
   /// upper bound, inclusive.
   /// </summary>
+  [<Extension>]
   static member To (a:float, b:float) : float seq = 
     upcast [a .. b]
 

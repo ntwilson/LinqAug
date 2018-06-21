@@ -2,17 +2,18 @@
 <package >
   <metadata>
     <id>Linqed</id>
-    <version>0.0.1</version>
+    <version>0.0.4</version>
     <authors>nathan wilson</authors>
     <owners>nathan wilson</owners>
     <description>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</description>
+    <releaseNotes>Add several new C# capabilities.  See the README for the full set.</releaseNotes>
     <licenseUrl>https://github.com/ntwilson/Linqed/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/ntwilson/Linqed</projectUrl>
     <tags>linq collections functional-programming</tags>
 
-    <!-- <dependencies>
-      <dependency id="SampleDependency" version="1.0" />
-    </dependencies> -->
+    <dependencies>
+      <dependency id="FSharp.Core" version="4.3.3" />
+    </dependencies>
   </metadata>
   <files>
     <file src="README.md" target="" />
@@ -22,6 +23,12 @@
     <file src="Linqed.CSharp\bin\Release\netstandard2.0\Linqed.CSharp.dll" target="lib\netstandard2.0" />
     <file src="Linqed.CSharp\bin\Release\netstandard2.0\Linqed.CSharp.XML" target="lib\netstandard2.0" />
     <file src="Linqed.CSharp\bin\Release\netstandard2.0\Linqed.CSharp.pdb" target="lib\netstandard2.0" />
+    <file src="Linqed.FSharp\bin\Release\net45\Linqed.FSharp.dll" target="lib\net45" />
+    <file src="Linqed.FSharp\bin\Release\net45\Linqed.FSharp.XML" target="lib\net45" />
+    <file src="Linqed.FSharp\bin\Release\net45\Linqed.FSharp.pdb" target="lib\net45" />
+    <file src="Linqed.CSharp\bin\Release\net45\Linqed.CSharp.dll" target="lib\net45" />
+    <file src="Linqed.CSharp\bin\Release\net45\Linqed.CSharp.XML" target="lib\net45" />
+    <file src="Linqed.CSharp\bin\Release\net45\Linqed.CSharp.pdb" target="lib\net45" />
     <file src="Linqed.FSharp\**\*.fs" target="src\Linqed.FSharp" />
     <file src="Linqed.CSharp\**\*.cs" target="src\Linqed.CSharp" />
   </files>
