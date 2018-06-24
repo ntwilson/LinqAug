@@ -62,6 +62,10 @@ module InfiniteSeq =
   /// function indicates the index (from 0) of element being transformed.
   let mapi f (InfiniteSeq xs) = InfiniteSeq (Seq.mapi f xs)
 
+  /// O(1). Build a new collection whose elements are the results of applying the given function
+  /// to the corresponding elements of the two collections pairwise.  
+  let map2 f xs (InfiniteSeq ys) = Seq.map2 f xs ys
+
   /// Returns a new collection containing only the elements of the collection
   /// for which the given predicate returns "true". This is a synonym for Seq.where.
   let filter f (InfiniteSeq xs) = InfiniteSeq (Seq.filter f xs)
@@ -72,4 +76,8 @@ module InfiniteSeq =
   /// Use this function with caution.  Will continue to search the InfiniteSeq
   /// until an element matching the predicate is found, no matter how long it takes.
   let find predicate (InfiniteSeq xs) = Seq.find predicate xs
-  
+
+  /// Combines the two sequences into a list of pairs. The two sequences need not have equal lengths:
+  /// when one sequence is exhausted any remaining elements in the other
+  /// sequence are ignored.
+  let zip xs (InfiniteSeq ys) = Seq.zip xs ys
