@@ -77,7 +77,7 @@ module FSeqBuilder =
 
 module FiniteSeq =
   /// Returns the length of the sequence
-  let inline length (FSeq xs) = LazyList.length xs
+  let inline length (xs : _ fseq) = xs.Length
 
   /// Applies a function to each element of the collection, threading an accumulator argument
   /// through the computation. If the input function is <c>f</c> and the elements are <c>i0...iN</c>
@@ -108,6 +108,11 @@ module FiniteSeq =
   /// function indicates the index (from 0) of element being transformed.
   let mapi f (FSeq xs) =
     fseq (LazyList.map2 f (LazyList.ofSeq (Seq.initInfinite id)) xs)
+
+  /// O(1). Build a new collection whose elements are the results of applying the given function
+  /// to the corresponding elements of the two collections pairwise.  
+  let inline map2 f (FSeq xs) (FSeq ys) = 
+    fseq (LazyList.map2 f xs ys)
 
   /// Returns a new collection containing only the elements of the collection
   /// for which the given predicate returns "true". This is a synonym for Seq.where.
@@ -159,9 +164,13 @@ module FiniteSeq =
   /// Returns the first element of the sequence.
   let inline tryHead (FSeq xs) = LazyList.tryHead xs
 
-  let tryMap2 f (FSeq xs) (FSeq ys)  =
-    //TODO
-    () 
+  /// O(1). Build a new collection whose elements are the results of applying the given function
+  /// to the corresponding elements of the two collections pairwise.  
+  /// Returns None if the sequences are different lengths
+  let tryMap2 f xs ys  =
+    if length xs <> length ys 
+    then None
+    else Some (map2 f xs ys)
  
 
   /// O(n), where n is count. Return option the list which skips the first 'n' elements of
@@ -182,14 +191,19 @@ module FiniteSeq =
     | Some (head, tail) -> Some (head, fseq tail)
     | None -> None
 
-  let tryZip (FSeq xs) (FSeq ys) =
-    // TODO 
-    ()
-
   /// Combines the two sequences into a list of pairs. The two sequences need not have equal lengths:
   /// when one sequence is exhausted any remaining elements in the other
   /// sequence are ignored.
   let inline zip (FSeq xs) (FSeq ys) = fseq (LazyList.zip xs ys)
+
+  /// Combines the two sequences into a list of pairs. The two sequences need not have equal lengths:
+  /// when one sequence is exhausted any remaining elements in the other
+  /// sequence are ignored.
+  /// Returns None if the sequences are different lengths
+  let tryZip xs ys =
+    if length xs <> length ys 
+    then None
+    else Some (zip xs ys)
   
 module FSeq =
   /// Returns the length of the sequence
@@ -271,6 +285,11 @@ module FSeq =
   /// Returns the first element of the sequence.
   let inline tryHead xs = FiniteSeq.tryHead xs
 
+  /// O(1). Build a new collection whose elements are the results of applying the given function
+  /// to the corresponding elements of the two collections pairwise.  
+  /// Returns None if the sequences are different lengths
+  let inline tryMap2 f xs ys = FiniteSeq.tryMap2 f xs ys 
+
   /// O(n), where n is count. Return option the list which skips the first 'n' elements of
   /// the input list.
   let inline trySkip n xs = FiniteSeq.trySkip n xs
@@ -285,6 +304,12 @@ module FSeq =
 
   /// O(1). Returns tuple of head element and tail of the list.
   let inline tryUncons xs = FiniteSeq.tryUncons xs
+
+  /// Combines the two sequences into a list of pairs. The two sequences need not have equal lengths:
+  /// when one sequence is exhausted any remaining elements in the other
+  /// sequence are ignored.
+  /// Returns None if the sequences are different lengths
+  let inline tryZip xs ys = FiniteSeq.tryZip xs ys
 
   /// Combines the two sequences into a list of pairs. The two sequences need not have equal lengths:
   /// when one sequence is exhausted any remaining elements in the other
