@@ -36,6 +36,8 @@ module NonEmptySeq =
   let map f (NonEmptySeq xs) = NonEmptySeq (FiniteSeq.map f xs)
   let mapi f (NonEmptySeq xs) =
     NonEmptySeq (FiniteSeq.mapi f xs)
+  let map2 f (NonEmptySeq xs) (NonEmptySeq ys) =
+    NonEmptySeq (FiniteSeq.map2 f xs ys)
   let filter f (NonEmptySeq xs) = FiniteSeq.filter f xs
   let append xs (NonEmptySeq ys) = NonEmptySeq (FiniteSeq.append xs ys)
   let concat (NonEmptySeq xs : NonEmptySeq<NonEmptySeq<'a>>) = 
@@ -47,7 +49,9 @@ module NonEmptySeq =
   let toList (NonEmptySeq xs) = FiniteSeq.toList xs
   let toSeq (NonEmptySeq xs) : _ seq = upcast xs
   let tryFind predicate (NonEmptySeq xs) = FiniteSeq.tryFind predicate xs
+  let tryMap2 f (NonEmptySeq xs) (NonEmptySeq ys) = Option.map NonEmptySeq (FiniteSeq.tryMap2 f xs ys)
   let trySkip n (NonEmptySeq xs) = FiniteSeq.trySkip n xs
   let tryTake n (NonEmptySeq xs) = FiniteSeq.tryTake n xs
+  let tryZip (NonEmptySeq xs) (NonEmptySeq ys) = NonEmptySeq (FiniteSeq.zip xs ys)
   let zip (NonEmptySeq xs) (NonEmptySeq ys) = NonEmptySeq (FiniteSeq.zip xs ys)
   
