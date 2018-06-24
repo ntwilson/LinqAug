@@ -17,9 +17,11 @@ type InfiniteSeq<'a> =
       let (InfiniteSeq xs) = this
       in upcast (xs.GetEnumerator ())
 
-/// Functions safe to use with InfiniteSeq's.  Functions in this module can be 
-/// used without danger of hanging indefinitely (with the 
-/// possible exception of <c>find</c>).
+/// Functions safe to use with InfiniteSeq's.  None of the functions in this module
+/// hang indefinitely for typical infinite sequences, though some of them could hang indefinitely
+/// for some infinite sequences (e.g., using 
+/// <c>InfiniteSeq.filter ((<>) 0) (InfiniteSeq.init (fun _ -> 0))</c> as a source
+/// would cause many of the functions to hang indefinitely).
 module InfiniteSeq =
   /// Generates a new sequence which, when iterated, will return successive
   /// elements by calling the given function. The results of calling the function
@@ -30,6 +32,10 @@ module InfiniteSeq =
 
   /// Returns the first N elements of the sequence.
   let take n (InfiniteSeq xs) = Seq.take n xs
+
+  /// Returns a sequence that, when iterated, yields elements of the underlying sequence while the
+  /// given predicate returns True, and then returns no further elements.
+  let takeWhile predicate (InfiniteSeq xs) = Seq.takeWhile predicate xs
 
   /// Returns a sequence that skips N elements of the underlying sequence and then yields the
   /// remaining elements of the sequence.

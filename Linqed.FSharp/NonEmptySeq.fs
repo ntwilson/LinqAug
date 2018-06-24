@@ -25,6 +25,7 @@ module NonEmptySeqMatcher =
     else NotEmpty (NonEmptySeq xs)
 
 module NonEmptySeq =
+  let create head (FSeq tail) = NonEmptySeq (FiniteSeq (LazyList.cons head tail))
   let head (NonEmptySeq xs) = Seq.head xs
   let tail (NonEmptySeq xs) = FiniteSeq.ofSeq (Seq.tail xs)
   let uncons xs = (head xs, tail xs)
