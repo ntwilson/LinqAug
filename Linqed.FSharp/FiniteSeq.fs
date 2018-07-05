@@ -4,7 +4,6 @@ open System
 open System.Collections
 open System.Collections.Generic
 open FSharpx.Collections
-open LazyList
 
 /// A lazy sequence constrained to be finite in length.
 type FiniteSeq<'a when 'a : comparison> (xs : LazyList<'a>) = 
@@ -22,6 +21,11 @@ type FiniteSeq<'a when 'a : comparison> (xs : LazyList<'a>) =
   let length =
     lazy (LazyList.length xs)
 
+  new (xs:'a seq) = FiniteSeq (LazyList.ofSeq xs)
+
+  member private this.HasCalculatedLength = length.IsValueCreated
+  member private this.HasCalculatedHash = hashCode.IsValueCreated
+
   member this.Values = xs
   member this.Length = length.Value
 
@@ -32,15 +36,10 @@ type FiniteSeq<'a when 'a : comparison> (xs : LazyList<'a>) =
   interface IComparable with
     member this.CompareTo x =
       
-      let compareLengths (ys : _ seq) =
-        match ys with
-        | :? FiniteSeq<'a> as ys -> compare (this.Length) (ys.Length)
-        | :? ('a[]) 
-        | :? ('a list)
-        | :? (ICollection<'a>) -> compare (this.Length) (Seq.length ys)
-        | _ -> compare (this.Length) (Seq.length (Seq.truncate (this.Length + 1) ys))
+      let compareLengths (ys : FiniteSeq<'a>) =
+        compare (this.Length) (ys.Length)
 
-      let compareElements (ys : _ seq) = 
+      let compareElements (ys : FiniteSeq<'a>) = 
         match 
             Seq.map2 compare xs ys 
             |> Seq.tryFind ((<>) 0)
@@ -49,16 +48,33 @@ type FiniteSeq<'a when 'a : comparison> (xs : LazyList<'a>) =
           | None -> 0
 
       match x with
-      | :? ('a seq) as ys -> 
+      | :? (FiniteSeq<'a>) as ys -> 
         match compareElements ys with
         | 0 -> compareLengths ys 
         | i -> i 
-      | _ -> invalidArg "x" (sprintf "Can't compare a %s with a %s" (this.GetType().Name) (x.GetType().Name)) 
+      | _ -> invalidArg "x" (sprintf "Can't compare a %s with a %s" (this.GetType().Name) (x.GetType().Name))
+
+  override this.Equals x = 
+    match x with
+    | :? FiniteSeq<'a> as xs ->
+      let lengthCompare = 
+        if this.HasCalculatedLength && xs.HasCalculatedLength then xs.Length = this.Length else true
+      let hashCompare = 
+        if this.HasCalculatedHash && xs.HasCalculatedHash then xs.GetHashCode() = this.GetHashCode() else true
+
+      LanguagePrimitives.PhysicalEquality this xs 
+      ||
+      (
+        lengthCompare 
+        && 
+        hashCompare
+        &&
+        compare this xs = 0
+      )
+    | _ -> false
 
   interface IEquatable<FiniteSeq<'a>> with
-    member this.Equals x = (this :> IComparable).CompareTo x = 0
-
-  override this.Equals x = (this :> IEquatable<FiniteSeq<'a>>).Equals x  
+    member this.Equals x = this.Equals x
 
   override this.GetHashCode () = hashCode.Value
 
@@ -71,7 +87,7 @@ module FSeqBuilder =
   /// A lazy sequence constrained to be finite in length.  There is no possible runtime check
   /// for whether or not a seq is infinite, so this is more of an assertion of the programmer
   /// that this particular seq is finite.
-  let fseq xs = FiniteSeq xs
+  let fseq (xs:_ seq) = FiniteSeq xs
   let (|FiniteSeq|) (xs:_ fseq) = xs.Values
   let (|FSeq|) (xs:_ fseq) = xs.Values
 
@@ -94,8 +110,8 @@ module FiniteSeq =
   /// Returns None if the sequence is empty
   let inline tryReduce f (FSeq xs) = 
     match xs with
-    | Cons (head, tail) -> Some (LazyList.fold f head tail)
-    | Nil -> None
+    | LazyList.Cons (head, tail) -> Some (LazyList.fold f head tail)
+    | LazyList.Nil -> None
 
   /// Builds a new collection whose elements are the results of applying the given function
   /// to each of the elements of the collection. The given function will be applied
@@ -110,7 +126,8 @@ module FiniteSeq =
     fseq (LazyList.map2 f (LazyList.ofSeq (Seq.initInfinite id)) xs)
 
   /// O(1). Build a new collection whose elements are the results of applying the given function
-  /// to the corresponding elements of the two collections pairwise.  
+  /// to the corresponding elements of the two collections pairwise.  The two sequences need not have equal lengths:
+  /// when one sequence is exhausted any remaining elements in the other sequence are ignored.
   let inline map2 f (FSeq xs) (FSeq ys) = 
     fseq (LazyList.map2 f xs ys)
 
@@ -181,7 +198,7 @@ module FiniteSeq =
   /// Forces the evaluation of the first cell of the list if it is not already evaluated.
   let inline tryTail (FSeq xs) = Option.map fseq (LazyList.tryTail xs)
   
-  /// O(n), where n is count. Return the list which on consumption will consist of at most 'n' elements of
+  /// O(n), where n is count. Return the list which on consumption will consist of exactly 'n' elements of
   /// the input list.
   let inline tryTake n (FSeq xs) = Option.map fseq (LazyList.tryTake n xs)
   
@@ -196,9 +213,7 @@ module FiniteSeq =
   /// sequence are ignored.
   let inline zip (FSeq xs) (FSeq ys) = fseq (LazyList.zip xs ys)
 
-  /// Combines the two sequences into a list of pairs. The two sequences need not have equal lengths:
-  /// when one sequence is exhausted any remaining elements in the other
-  /// sequence are ignored.
+  /// Combines the two sequences into a list of pairs. 
   /// Returns None if the sequences are different lengths
   let tryZip xs ys =
     if length xs <> length ys 
@@ -234,6 +249,11 @@ module FSeq =
   /// to each of the elements of the collection. The integer index passed to the
   /// function indicates the index (from 0) of element being transformed.
   let inline mapi f xs = FiniteSeq.mapi f xs
+
+  /// O(1). Build a new collection whose elements are the results of applying the given function
+  /// to the corresponding elements of the two collections pairwise. The two sequences need not have equal lengths:
+  /// when one sequence is exhausted any remaining elements in the other sequence are ignored.
+  let inline map2 f xs ys = FiniteSeq.map2 f xs ys
 
   /// Returns a new collection containing only the elements of the collection
   /// for which the given predicate returns "true". This is a synonym for Seq.where.
@@ -298,16 +318,14 @@ module FSeq =
   /// Forces the evaluation of the first cell of the list if it is not already evaluated.
   let inline tryTail xs = FiniteSeq.tryTail xs
 
-  /// O(n), where n is count. Return the list which on consumption will consist of at most 'n' elements of
+  /// O(n), where n is count. Return the list which on consumption will consist of exactly 'n' elements of
   /// the input list.
   let inline tryTake n xs = FiniteSeq.tryTake n xs
 
   /// O(1). Returns tuple of head element and tail of the list.
   let inline tryUncons xs = FiniteSeq.tryUncons xs
 
-  /// Combines the two sequences into a list of pairs. The two sequences need not have equal lengths:
-  /// when one sequence is exhausted any remaining elements in the other
-  /// sequence are ignored.
+  /// Combines the two sequences into a list of pairs. 
   /// Returns None if the sequences are different lengths
   let inline tryZip xs ys = FiniteSeq.tryZip xs ys
 

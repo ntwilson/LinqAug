@@ -2,18 +2,19 @@
 <package >
   <metadata>
     <id>Linqed</id>
-    <version>0.0.4</version>
+    <version>0.0.5-beta</version>
     <authors>nathan wilson</authors>
     <owners>nathan wilson</owners>
     <description>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</description>
     <summary>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</summary>
-    <releaseNotes>Add several new C# capabilities.  See the README for the full set.</releaseNotes>
+    <releaseNotes>Add types for FiniteSeq, InfiniteSeq, and NonEmptySeq.  See the README for the descriptions.</releaseNotes>
     <licenseUrl>https://github.com/ntwilson/Linqed/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/ntwilson/Linqed</projectUrl>
     <tags>linq collections functional-programming</tags>
 
     <dependencies>
       <dependency id="FSharp.Core" version="4.1.17" />
+      <dependency id="FSharpx.collections" version="2.0.0-beta3" />
     </dependencies>
   </metadata>
   <files>

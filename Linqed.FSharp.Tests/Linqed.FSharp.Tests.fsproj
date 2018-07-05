@@ -4,13 +4,16 @@
     <TargetFramework>net461</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="MatchSpec.fs" />
+    <Compile Include="FSeqSpec.fs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="fsharp.core" Version="4.5.0" />
     <PackageReference Include="microsoft.net.test.sdk" Version="15.7.2" />
     <PackageReference Include="nunit" Version="3.10.1" />
     <PackageReference Include="nunit3TestAdapter" Version="3.10.0" />
