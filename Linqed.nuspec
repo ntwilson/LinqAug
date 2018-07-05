@@ -2,12 +2,12 @@
 <package >
   <metadata>
     <id>Linqed</id>
-    <version>0.0.5-beta</version>
+    <version>0.0.5-beta2</version>
     <authors>nathan wilson</authors>
     <owners>nathan wilson</owners>
     <description>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</description>
     <summary>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</summary>
-    <releaseNotes>Add types for FiniteSeq, InfiniteSeq, and NonEmptySeq.  See the README for the descriptions.</releaseNotes>
+    <releaseNotes>Performance improvements for FiniteSeq equality checking.</releaseNotes>
     <licenseUrl>https://github.com/ntwilson/Linqed/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/ntwilson/Linqed</projectUrl>
     <tags>linq collections functional-programming</tags>
