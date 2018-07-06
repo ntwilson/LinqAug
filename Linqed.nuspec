@@ -2,19 +2,19 @@
 <package >
   <metadata>
     <id>Linqed</id>
-    <version>0.0.5-beta2</version>
+    <version>0.0.5</version>
     <authors>nathan wilson</authors>
     <owners>nathan wilson</owners>
     <description>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</description>
     <summary>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</summary>
-    <releaseNotes>Performance improvements for FiniteSeq equality checking.</releaseNotes>
+    <releaseNotes>Use stable version of FSharpx.Collections (removes netstandard2.0 as a target).</releaseNotes>
     <licenseUrl>https://github.com/ntwilson/Linqed/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/ntwilson/Linqed</projectUrl>
     <tags>linq collections functional-programming</tags>
 
     <dependencies>
       <dependency id="FSharp.Core" version="4.1.17" />
-      <dependency id="FSharpx.collections" version="2.0.0-beta3" />
+      <dependency id="FSharpx.collections" version="1.17.0" />
     </dependencies>
   </metadata>
   <files>
