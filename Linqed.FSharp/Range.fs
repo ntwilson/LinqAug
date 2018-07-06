@@ -1,6 +1,5 @@
 namespace Linqed
 
-open System.Collections.Generic
 open System.Runtime.CompilerServices
 
 type IntStepper (start:int, step:int) = 

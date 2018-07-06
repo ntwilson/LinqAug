@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Compile Include="MatchSpec.fs" />
-    <Compile Include="FSeqSpec.fs" />
   </ItemGroup>
 
   <ItemGroup>

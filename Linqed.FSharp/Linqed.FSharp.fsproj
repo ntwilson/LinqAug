@@ -1,21 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
     <DocumentationFile>bin\$(Configuration)\net45\$(AssemblyName).XML</DocumentationFile>
     <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Range.fs" />
-    <Compile Include="FiniteSeq.fs" />
-    <Compile Include="InfiniteSeq.fs" />
-    <Compile Include="NonEmptySeq.fs" />
     <Compile Include="Match.fs" />
     <Compile Include="ToDictionary.fs" />
     <Compile Include="Prelude.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Core" Version="4.1.17" />
-    <PackageReference Include="fsharpx.collections" Version="1.17.0" />
+    <PackageReference Include="LanguageExt.Core" Version="3.0.19" />
   </ItemGroup>
 </Project>
