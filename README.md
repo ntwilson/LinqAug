@@ -39,6 +39,20 @@ var (pathToLook, fileNameMask, extensionFilter) =
 
 
 
+There are overloads for matching with at least n elements (shown above), or matching with exactly n elements:
+
+```C#
+var (pathToLook, fileNameMask, extensionFilter) = 
+  commandLineArgs.Match(
+    exactlyThree: (path, mask, filter) => (path, mask, filter),
+    exactlyTwo: (path, mask) => (path, mask, "*.*"),
+    otherwise: _ => throw new ArgumentException("Invalid command line arguments. "
+                                                + "Expecting at least two arguments.")
+  );
+```
+
+
+
 #### `.SequenceHashCode`
 
 Computes the hash code of an IEnumerable based on its _contents_ rather than on its memory address.  So two sequences that contain the same elements will have the same hash code from this function.

@@ -116,5 +116,42 @@ namespace Linqed.CSharpTests {
         otherwise: _ => false
       ).ShouldBe(true);
     }
+
+    [TestMethod]
+    public void CanMatchExactlyANumberOfElements() { 
+      1.To(3).Match(
+        exactlyTwo: (a, b) => false,
+        exactlyThree: (a, b, c) => a + b + c == 6,
+        exactlyFour: (a, b, c, d) => false,
+        otherwise: _ => false
+      ).ShouldBe(true);
+
+      1.To(4).Match(
+        exactlyTwo: (a, b) => false,
+        exactlyThree: (a, b, c) => false,
+        otherwise: _ => true
+      ).ShouldBe(true);
+    }
+
+    [TestMethod]
+    public void CanMatchExactCountWithAnActionInsteadOfFunc() { 
+      var ran = false;
+      1.To(3).Match(
+        exactlyTwo: (a, b) => { Assert.Fail(); },
+        exactlyThree: (a, b, c) => { ran = true; },
+        exactlyFour: (a, b, c, d) => { Assert.Fail(); },
+        otherwise: _ => { Assert.Fail(); }
+      );
+
+      ran.ShouldBe(true);
+      ran = false;
+
+      1.To(4).Match(
+        exactlyTwo: (a, b) => { Assert.Fail(); },
+        exactlyThree: (a, b, c) => { Assert.Fail(); },
+        otherwise: _ => { ran = true; }
+      );
+      ran.ShouldBe(true);
+    }
   }
 }
