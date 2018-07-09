@@ -7,6 +7,10 @@ namespace Linqed.CSharpTests {
       Assert.AreEqual(expected, actual);
     }
 
+    public static void ShouldNotBe<T>(this T actual, T expected) {
+      Assert.AreNotEqual(expected, actual);
+    }
+
     public static void ShouldSatisfy<T>(this T a, Func<T, bool> condition) {
       Assert.IsTrue(condition(a));
     }

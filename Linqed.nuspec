@@ -2,19 +2,19 @@
 <package >
   <metadata>
     <id>Linqed</id>
-    <version>0.0.6</version>
+    <version>1.0.0</version>
     <authors>nathan wilson</authors>
     <owners>nathan wilson</owners>
     <description>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</description>
     <summary>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</summary>
-    <releaseNotes>Remove FiniteSeq, InfiniteSeq, and NonEmptySeq, moving them to the SafetyFirst package.</releaseNotes>
+    <releaseNotes>C# extension methods added for ChunkBySize, Windowed, SequenceHashCode, and SequenceString.</releaseNotes>
     <licenseUrl>https://github.com/ntwilson/Linqed/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/ntwilson/Linqed</projectUrl>
     <tags>linq collections functional-programming</tags>
 
     <dependencies>
       <dependency id="FSharp.Core" version="4.1.17" />
-      <dependency id="LanguageExt.Core" version="3.0.19" />
+      <dependency id="ResultDotNet" version="2.0.5" />
     </dependencies>
   </metadata>
   <files>
