@@ -14,7 +14,7 @@ type FloatStepper (start:float, step:float) =
   member this.To finish : float seq = upcast [start .. step .. finish]
 
 [<Extension>]
-type Range() = 
+type RangeExtensions() = 
   /// <summary>
   /// Returns an IEnumerable that ranges from the lower bound to the 
   /// upper bound, inclusive.

@@ -2,12 +2,12 @@
 <package >
   <metadata>
     <id>Linqed</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <authors>nathan wilson</authors>
     <owners>nathan wilson</owners>
     <description>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</description>
     <summary>LINQ Extended Design. Additional C# extension methods (inspired by LINQ) and F# collection functions</summary>
-    <releaseNotes>Additional Match overloads for matching an exact number of elements.</releaseNotes>
+    <releaseNotes>Renamed the `Range` module, since "Range" is a common name that causes collisions.</releaseNotes>
     <licenseUrl>https://github.com/ntwilson/Linqed/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>https://github.com/ntwilson/Linqed</projectUrl>
     <tags>linq collections functional-programming</tags>
