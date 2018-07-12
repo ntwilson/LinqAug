@@ -5,10 +5,12 @@ open System.Linq
 open System.Runtime.CompilerServices
 
 [<Extension>]
-module ToDictionary =
+module ToDictionaryExtension =
 
-  /// Creates a new Dictionary<TKey, TValue> from the key/value tuples given.
-  /// Infers the types of the keys and values from the arguments.
+  /// <summary>
+  /// Creates a new <c>Dictionary&lt;TKey, TValue></c> from the (key,value) tuples given.
+  /// Infers types <c>TKey</c> and <c>TValue</c> from the arguments.
+  /// </summary>
   [<Extension>]
   let ToDictionary (keysAndValues : (struct ('TKey * 'TValue)) seq ) =
     keysAndValues.ToDictionary (

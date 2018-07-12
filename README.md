@@ -23,6 +23,26 @@ will return an `IEnumerable<Array<int>>` containing the values:
 
 
 
+#### `.DistinctBy`
+
+Returns a sequence that contains no duplicate entries according to the generic hash and equality comparisons on the keys returned by the given key-generating function.  If an element occurs multiple times in the sequence then the later occurrences are discarded.  For example:
+
+```C#
+var allCustomers = allSales.Select(sale => sale.Customer).DistinctBy(cust => cust.ID)
+```
+
+
+
+#### `.EqualsWith`
+
+Determines if the two sequences are equal according to equality comparer that is given.
+
+```C#
+if (xs.EqualsWith(new[] { 1.0, 2.0, 3.0 }, (x, y) => Math.Abs(x - y) < 1E-9))
+```
+
+
+
 #### `.Match`
 
 Provides a safe way to access up to the first five elements of an `IEnumerable<T>`.  Instead of using indexing or `.ElementAt(i)`, which could throw an Exception if improperly used, the `.Match` extension method lets you check the length of the enumerable at the same time as accessing the values.
@@ -136,6 +156,30 @@ IEnumerable<int> xs = Seq(1, 2, 3);
 
 
 
+#### `Array`
+
+Similar to `Seq`, but creates an array.  Rather than typing out
+
+`var xs = new[] { 1, 2, 3 };`
+
+you can type:
+
+`var xs = Array(1, 2, 3);`
+
+
+
+#### `List`
+
+Similar to `Seq`, but creates a `System.Collections.Generic.List<T>`.  Rather than typing out
+
+`var xs = new List<int>() { 1, 2, 3 };`
+
+you can type:
+
+`var xs = List(1, 2, 3);`
+
+
+
 #### `LazyValue`
 
 Creates new Lazies without specifying the type.  Rather than typing out
@@ -198,5 +242,15 @@ let (pathToLook, fileNameMask, extensionFilter) =
   | SeqTwoOrMore (path, mask, _) -> (path, mask, "*.*")
   | _ -> invalidArg "commandLineArgs" ("Invalid command line arguments. "
                                        + "Expecting at least two arguments.")
+```
+
+
+
+#### `Seq/Array/List.equalsWith`
+
+Determines if the two sequences are equal according to the equality comparer that is given.
+
+```F#
+if xs |> List.equalsWith (fun a b -> abs (a - b) < 1E-9) [ 1.0; 2.0; 3.0 ] then ...
 ```
 

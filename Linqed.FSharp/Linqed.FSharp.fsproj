@@ -13,6 +13,8 @@
     <Compile Include="SequenceHashCode.fs" />
     <Compile Include="ChunkBySize.fs" />
     <Compile Include="Windowed.fs" />
+    <Compile Include="DistinctBy.fs" />
+    <Compile Include="EqualsWith.fs" />
     <Compile Include="Prelude.fs" />
   </ItemGroup>
   <ItemGroup>

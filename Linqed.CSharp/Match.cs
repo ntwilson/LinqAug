@@ -5,14 +5,24 @@ using System.Collections.Generic;
 namespace Linqed {
 	public static class MatchExtensions {
 
-		/// Matches an IEnumerable with how many elements it has.  If the enumerable has at least
-		/// as many elements as the specified matching function, calls the matching function given 
+		/// <summary>
+		/// Matches an <c>IEnumerable&lt;T></c> with how many elements it has.  If the enumerable has 
+		/// at least as many elements as the specified matching function, calls the matching function given 
 		/// with the first elements of the enumerable.  It will call the function with the most matches
-		/// possible.  So if you supply a twoOrMore function and a fourOrMore function, it will give 
-		/// preference to the fourOrMore function if that matches.  
+		/// possible.  So if you supply a <c>twoOrMore</c> function and a <c>fourOrMore</c> function, 
+		/// it will give preference to the <c>fourOrMore</c> function if that matches.  
 		/// Note: For readability, it is recommended that you use named arguments, and pass the 
-		/// arguments in reverse order, starting with the most matches, and ending with the otherwise
+		/// arguments in reverse order, starting with the most matches, and ending with the <c>otherwise</c>
 		/// function.  This will list the matches in the order of precedence.
+		/// For example:
+		/// <code>
+		/// var sumOfFirstTwoOrThree = 
+		///   listOfInts.Match(
+		///     threeOrMore: (a, b, c, rest) => a + b + c, 
+		///     twoOrMore: (a, b, rest) => a + b,
+		///     otherwise: _ => 0);
+		/// </code>
+		/// </summary>
 		public static TOut Match<TIn, TOut>(this IEnumerable<TIn> xs, 
 			Func<IEnumerable<TIn>, TOut> otherwise, 
 			Func<TIn, IEnumerable<TIn>, TOut> oneOrMore = null,
@@ -51,14 +61,23 @@ namespace Linqed {
 			return otherwise(xs);
 		}
 
-		/// Matches an IEnumerable with how many elements it has.  If the enumerable has at least
-		/// as many elements as the specified matching function, calls the matching function given 
+		/// <summary>
+		/// Matches an <c>IEnumerable&lt;T></c> with how many elements it has.  If the enumerable has 
+		/// at least as many elements as the specified matching function, calls the matching function given 
 		/// with the first elements of the enumerable.  It will call the function with the most matches
-		/// possible.  So if you supply a twoOrMore function and a fourOrMore function, it will give 
-		/// preference to the fourOrMore function if that matches.  
+		/// possible.  So if you supply a <c>twoOrMore</c> function and a <c>fourOrMore</c> function, 
+		/// it will give preference to the <c>fourOrMore</c> function if that matches.  
 		/// Note: For readability, it is recommended that you use named arguments, and pass the 
-		/// arguments in reverse order, starting with the most matches, and ending with the otherwise
+		/// arguments in reverse order, starting with the most matches, and ending with the <c>otherwise</c>
 		/// function.  This will list the matches in the order of precedence.
+		/// For example:
+		/// <code>
+		/// listOfInts.Match(
+		///   threeOrMore: (a, b, c, rest) => { Console.WriteLine(a + b + c); }, 
+		///   twoOrMore: (a, b, rest) => { Console.WriteLine(a + b); },
+		///   otherwise: _ => { Console.WriteLine("Wrong number of values"); });
+		/// </code>
+		/// </summary>
 		public static void Match<TIn>(this IEnumerable<TIn> xs, 
 			Action<IEnumerable<TIn>> otherwise, 
 			Action<TIn, IEnumerable<TIn>> oneOrMore = null,
@@ -107,12 +126,22 @@ namespace Linqed {
 			otherwise(xs);
 		}
 
-		/// Matches an IEnumerable with how many elements it has.  If the enumerable has exactly
-		/// as many elements as the specified matching function, calls the matching function given 
+		/// <summary>
+		/// Matches an <c>IEnumerable&lt;T></c> with how many elements it has.  If the enumerable has 
+		/// exactly as many elements as the specified matching function, calls the matching function given 
 		/// with each element of the enumerable.  
 		/// Note: For readability, it is recommended that you use named arguments, and pass the 
-		/// arguments in reverse order, starting with the most matches, and ending with the otherwise
+		/// arguments in reverse order, starting with the most matches, and ending with the <c>otherwise</c>
 		/// function.
+		/// For example:
+		/// <code>
+		/// var sumOfTwoOrThree = 
+		///   listOfInts.Match(
+		///     exactlyThree: (a, b, c) => a + b + c, 
+		///     exactlyTwo: (a, b) => a + b,
+		///     otherwise: _ => false);
+		/// </code>
+		/// </summary>
 		public static TOut Match<TIn, TOut>(this IEnumerable<TIn> xs, 
 			Func<IEnumerable<TIn>, TOut> otherwise, 
 			Func<TIn, TOut> exactlyOne = null,
@@ -151,12 +180,21 @@ namespace Linqed {
 			return otherwise(xs);
 		}
 
-		/// Matches an IEnumerable with how many elements it has.  If the enumerable has exactly
-		/// as many elements as the specified matching function, calls the matching function given 
-		/// with each element of the enumerable.  
+		/// <summary>
+		/// Matches an <c>IEnumerable&lt;T></c> with how many elements it has.  If the enumerable has 
+		/// exactly as many elements as the specified matching function, calls the matching function 
+		/// given with each element of the enumerable.  
 		/// Note: For readability, it is recommended that you use named arguments, and pass the 
-		/// arguments in reverse order, starting with the most matches, and ending with the otherwise
+		/// arguments in reverse order, starting with the most matches, and ending with the <c>otherwise</c>
 		/// function.
+		/// For example:
+		/// <code>
+		/// listOfInts.Match(
+		///   exactlyThree: (a, b, c) => { Console.WriteLine(a + b + c); }, 
+		///   exactlyTwo: (a, b) => { Console.WriteLine(a + b); },
+		///   otherwise: _ => { Console.WriteLine("Wrong number of values"); });
+		/// </code>
+		/// </summary>
 		public static void Match<TIn>(this IEnumerable<TIn> xs, 
 			Action<IEnumerable<TIn>> otherwise, 
 			Action<TIn> exactlyOne = null,

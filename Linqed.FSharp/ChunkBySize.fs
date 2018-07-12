@@ -5,13 +5,17 @@ open System.Runtime.CompilerServices
 open ResultDotNet
 
 [<Extension>]
-module ChunkBySize = 
-  /// Divides the input sequence into chunks of size at most chunkSize.
+module ChunkBySizeExtension = 
+  /// <summary>
+  /// Divides the input sequence into chunks of size at most <c>chunkSize</c>.
+  /// </summary>
   [<Extension>]
   let ChunkBySize xs chunkSize = 
     Seq.chunkBySize chunkSize xs
 
-  /// Divides the input sequence into chunks of size at most chunkSize.
+  /// <summary>
+  /// Divides the input sequence into chunks of size at most <c>chunkSize</c>.
+  /// </summary>
   [<Extension>]
   let ChunkBySizeSafe xs chunkSize = 
     // https://github.com/ntwilson/SafetyFirst/blob/master/SafetyFirst/Seq.fs line 33
