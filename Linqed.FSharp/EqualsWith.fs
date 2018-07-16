@@ -3,16 +3,6 @@ namespace Linqed
 open System
 open System.Runtime.CompilerServices
 
-module Seq =
-  /// <summary>
-  /// Determines if the two sequences are equal according to the
-  /// equality comparer that is given.
-  /// </summary>
-  let equalsWith comparer (xs:'a seq) (ys:'a seq) =
-    Seq.forall2 comparer xs ys
-    && 
-    Seq.length xs = Seq.length ys
-
 module List = 
   /// <summary>
   /// Determines if the two lists are equal according to the

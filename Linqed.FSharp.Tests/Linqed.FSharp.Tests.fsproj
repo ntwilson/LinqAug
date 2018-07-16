@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="MatchSpec.fs" />
     <Compile Include="EqualsWithSpec.fs" />
+    <Compile Include="SeqSpec.fs" />
   </ItemGroup>
 
   <ItemGroup>
