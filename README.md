@@ -246,11 +246,96 @@ let (pathToLook, fileNameMask, extensionFilter) =
 
 
 
+#### `Seq.add`
+
+Add a single element to the end of the input sequence. 
+
+```F#
+Seq.add 5 {1 .. 4}
+  // returns { 1 .. 5 }
+```
+
+
+
+#### `Seq.cons`
+
+Add a single element to the beginning of the input sequence.   
+
+```F#
+Seq.cons 1 {2 .. 5}
+  // returns { 1 .. 5 }
+```
+
+
+
 #### `Seq/Array/List.equalsWith`
 
 Determines if the two sequences are equal according to the equality comparer that is given.
 
 ```F#
 if xs |> List.equalsWith (fun a b -> abs (a - b) < 1E-9) [ 1.0; 2.0; 3.0 ] then ...
+```
+
+
+
+#### `Seq.split`
+
+Splits a sequence at every occurrence of an element satisfying `isSplitElement`.  The split occurs immediately before each element that satisfies `isSplitElement`, and the element satisfying `isSplitElement` will be included as the first element of the sequence following the split. 
+
+Returning a two dimensional sequence, `split` is guaranteed to return at least one element in the outer sequence, though that element may be an empty sequence.  For example:
+
+```F#
+Seq.split ((=) 100) [1;2;3;100;100;4;100;5;6]
+  //returns [[1;2;3];[100];[100;4];[100;5;6]]
+```
+
+
+
+#### `Seq.splitPairwise`
+
+Splits a sequence between each pair of adjacent elements that satisfy `splitBetween`.
+
+Returning a two dimensional sequence, `splitPairwise` is guaranteed to return at least one element in the outer sequence, though that element may be an empty sequence.
+
+For example:
+
+```F#
+Seq.splitPairwise (=) [1;1;2;3;4;4;4;5]
+  //returns [[0;1];[1;2;3;4];[4];[4;5]]
+```
+
+
+
+#### `Seq.uncons`
+
+Split a sequence into a tuple of its head and tail, i.e., its first element, and the remaining elements.
+
+Note this will produce the head element twice, so if elements are computationally expensive to produce, it is recommended that you cache the sequence first.
+
+Exceptions:
+
+`System.ArgumentException`: Thrown when the input does not have any elements.
+
+```F#
+let head, tail = Seq.uncons { 1 .. 5 }
+  // returns 1, {2 .. 5}
+```
+
+
+
+
+
+#### `Seq.unconsSafe/Seq.uncons'`
+
+Split a sequence into a tuple of its head and tail, i.e., its first element, and the remaining elements.
+
+Note this will produce the head element twice, so if elements are computationally expensive to produce, it is recommended that you cache the sequence first.
+
+Returns an `Error` when the input does not have any elements. 
+
+```F#
+match Seq.unconsSafe xs with
+| Ok (head, tail) -> ...
+| Error _ -> ...
 ```
 

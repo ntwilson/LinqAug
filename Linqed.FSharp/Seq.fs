@@ -57,6 +57,8 @@ module Seq =
   /// The split occurs immediately before each element that satisfies <c>isSplitElement</c>,
   /// and the element satisfying <c>isSplitElement</c> will be included as the first element of 
   /// the sequence following the split.
+  /// Returning a two dimensional sequence, <c>split</c> is guaranteed to return at least one 
+  /// element in the outer sequence, though that element may be an empty sequence.
   /// For example:
   /// <code>
   /// Seq.split ((=) 100) [1;2;3;100;100;4;100;5;6]
@@ -86,9 +88,11 @@ module Seq =
 
   /// <summary>
   /// Splits a sequence between each pair of adjacent elements that satisfy <c>splitBetween</c>.
+  /// Returning a two dimensional sequence, <c>splitPairwise</c> is guaranteed to return at least 
+  /// one element in the outer sequence, though that element may be an empty sequence.
   /// For example:
   /// <code>
-  /// NonEmptySeq.splitPairwise (=) (NonEmptySeq.create 0 (fseq [1;1;2;3;4;4;4;5]))
+  /// Seq.splitPairwise (=) [1;1;2;3;4;4;4;5]
   ///   //returns [[0;1];[1;2;3;4];[4];[4;5]]
   /// </code>
   /// </summary>
