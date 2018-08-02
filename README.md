@@ -95,6 +95,18 @@ will return "seq [1; 2; 3; 4]"
 
 
 
+#### `.SplitHeadAndTail`
+
+Split the first element of the sequence from the rest of the sequence, returning both as a tuple.  
+
+For example, 
+
+`new[] {1, 2, 3, 4}.SplitHeadAndTail()` 
+
+will return `(1, [2,3,4])`.
+
+
+
 #### `.To`
 
 Provides a convenient syntax for making ranges.  Works with integers and doubles.  Two syntaxes are available:

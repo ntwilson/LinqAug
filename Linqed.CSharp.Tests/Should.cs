@@ -14,6 +14,12 @@ namespace Linqed.CSharpTests {
     public static void ShouldSatisfy<T>(this T a, Func<T, bool> condition) {
       Assert.IsTrue(condition(a));
     }
+
+    public static void ShouldThrow(this Action act) {
+      var throws = false;
+      try { act(); } catch { throws = true; }
+      throws.ShouldBe(true);
+    }
   }
 }
 

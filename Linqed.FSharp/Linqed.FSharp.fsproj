@@ -16,6 +16,7 @@
     <Compile Include="DistinctBy.fs" />
     <Compile Include="Seq.fs" />
     <Compile Include="EqualsWith.fs" />
+    <Compile Include="SplitHeadAndTail.fs" />
     <Compile Include="Prelude.fs" />
   </ItemGroup>
   <ItemGroup>
