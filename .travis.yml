@@ -6,5 +6,5 @@ dotnet: 2.1.502
 #   - nuget restore SafetyFirst.sln
 #   - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
 script:
-  - dotnet build
-  - dotnet test
+  - dotnet build -f netcoreapp2.0
+  - dotnet test -f netcoreapp2.0
