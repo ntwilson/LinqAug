@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 using Linqed;
 using static Linqed.Prelude;
 
 namespace Linqed.CSharpTests {
-  [TestClass]
+  [TestFixture]
   public class SplitHeadAndTailSpec {
-    [TestMethod]
+    [Test]
     public void SplitsTheHeadAndTailOfNonEmptySequences() {
       var (head, tail) = Seq(1, 2, 3, 4).SplitHeadAndTail();
       head.ShouldBe(1);
@@ -30,7 +30,7 @@ namespace Linqed.CSharpTests {
       tail.ShouldSatisfy(it => !it.Any());
     }
 
-    [TestMethod]
+    [Test]
     public void ErrorsWhenSplittingTheHeadAndTailOfEmptySequences() { 
       Action act;
       act = () => Enumerable.Empty<int>().SplitHeadAndTail();

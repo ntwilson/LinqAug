@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using static Linqed.Prelude;
 
 namespace Linqed.CSharpTests {
-  [TestClass]
+  [TestFixture]
   public class LazySpec {
-    [TestMethod]
+    [Test]
     public void ConstructsALazyFromAFunc() { 
       Lazy<string> myLazy = LazyValue(() => "hello");
       myLazy.Value.ShouldBe("hello");

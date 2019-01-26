@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 using Linqed;
 
 namespace Linqed.CSharpTests {
-  [TestClass]
+  [TestFixture]
   public class MatchSpec {
-    [TestMethod]
+    [Test]
     public void MatchesAnEnumerableOnWhetherItHasElementsOrNot() {
       var didExecuteInner = false;
 
@@ -24,7 +24,7 @@ namespace Linqed.CSharpTests {
       didExecuteInner.ShouldBe(true);
     }
 
-    [TestMethod]
+    [Test]
     public void ReturnsAValueFromTheMatchIfOneIsGiven() {
       1.To(4).Match(
         oneOrMore: (head, tail) => tail.Concat(new[] { head }),
@@ -32,7 +32,7 @@ namespace Linqed.CSharpTests {
       ).ShouldSatisfy(it => it.SequenceEqual(new[] { 2, 3, 4, 1 }));
     }
 
-    [TestMethod]
+    [Test]
     public void PassesTheWholeEnumerableToTheMismatchBranch() { 
       var didExecuteInner = false;
       0.To(-1).Match(
@@ -46,7 +46,7 @@ namespace Linqed.CSharpTests {
       didExecuteInner.ShouldBe(true);
     }
 
-    [TestMethod]
+    [Test]
     public void AllowsADefaultValueOnAMismatch() { 
       0.To(-1).Match(
         oneOrMore: (head, tail) => head,
@@ -55,7 +55,7 @@ namespace Linqed.CSharpTests {
     }
 
     
-    [TestMethod]
+    [Test]
     public void MatchesAnEnumerableWithTwoElements() {
       var didExecuteInner = false;
 
@@ -72,7 +72,7 @@ namespace Linqed.CSharpTests {
       didExecuteInner.ShouldBe(true);
     }
 
-    [TestMethod]
+    [Test]
     public void ReturnsAValueFromATwoHeadMatchIfOneIsGiven() {
       1.To(4).Match(
         twoOrMore: (head1, head2, tail) => tail.Concat(new[] { head1, head2 }),
@@ -80,7 +80,7 @@ namespace Linqed.CSharpTests {
       ).ShouldSatisfy(it => it.SequenceEqual(new[] { 3, 4, 1, 2 }));
     }
 
-    [TestMethod]
+    [Test]
     public void PassesTheWholeEnumerableToThe2HeadMismatchBranch() { 
       var didExecuteInner = false;
       1.To(1).Match(
@@ -94,7 +94,7 @@ namespace Linqed.CSharpTests {
       didExecuteInner.ShouldBe(true);
     }
 
-    [TestMethod]
+    [Test]
     public void AllowsADefaultValueOnA2HeadMismatch() { 
       1.To(1).Match(
         twoOrMore: (head1, head2, tail) => head1,
@@ -102,7 +102,7 @@ namespace Linqed.CSharpTests {
       ).ShouldBe(5);
     }
 
-    [TestMethod]
+    [Test]
     public void LetsYouSpecifyMultipleMatches() { 
       1.To(4).Match(
         fourOrMore: (a, b, c, d, tail) => true,
@@ -117,7 +117,7 @@ namespace Linqed.CSharpTests {
       ).ShouldBe(true);
     }
 
-    [TestMethod]
+    [Test]
     public void CanMatchExactlyANumberOfElements() { 
       1.To(3).Match(
         exactlyTwo: (a, b) => false,
@@ -133,7 +133,7 @@ namespace Linqed.CSharpTests {
       ).ShouldBe(true);
     }
 
-    [TestMethod]
+    [Test]
     public void CanMatchExactCountWithAnActionInsteadOfFunc() { 
       var ran = false;
       1.To(3).Match(
