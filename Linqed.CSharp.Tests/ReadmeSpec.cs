@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using static Linqed.Prelude;
 
 namespace Linqed.CSharpTests {
-  [TestClass]
+  [TestFixture]
   public class ReadmeSpec {
-    [TestMethod]
+    [Test]
     public void ConstructsADictionaryLikeInTheReadme() { 
       var myComplexDict = Dict(
         (DateTime.Today, LazyValue(() => Seq(1.0, 2.0, 3.0))),

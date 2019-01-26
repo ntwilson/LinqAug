@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/ntwilson/Linqed.svg?branch=master)](https://travis-ci.com/ntwilson/Linqed)
+
 # LINQED
 LINQ Extended Design
 

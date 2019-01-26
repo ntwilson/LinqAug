@@ -5,6 +5,8 @@ open Swensen.Unquote
 
 open Linqed
 
+let x = ()
+
 let toEquatable xs = Seq.map Seq.toList xs |> Seq.toList
 
 [<Test>]
@@ -65,11 +67,11 @@ let ``can split on multiple different pairs`` () =
         [[1];[1;2;3;4];[4];[4;5;6];[6]]
     @>
 
-let every4thValueIs100 = 
-  Seq.initInfinite (fun i -> if i % 4 = 0 then 100 else i)
-
 [<Test>]
 let ``can split infinite sequences`` () = 
+  let every4thValueIs100 = 
+    Seq.initInfinite (fun i -> if i % 4 = 0 then 100 else i)
+
   test
     <@ 
       let xs = Seq.split ((=) 100) (every4thValueIs100)
@@ -85,6 +87,9 @@ let ``can split infinite sequences`` () =
 
 [<Test>]
 let ``can split infinite sequences pairwise`` () = 
+  let every4thValueIs100 = 
+    Seq.initInfinite (fun i -> if i % 4 = 0 then 100 else i)
+
   test
     <@ 
       let xs =

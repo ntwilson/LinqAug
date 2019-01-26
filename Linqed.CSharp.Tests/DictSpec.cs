@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using static Linqed.Prelude;
 
 namespace Linqed.CSharpTests {
-  [TestClass]
+  [TestFixture]
   public class DictSpec {
-    [TestMethod]
+    [Test]
     public void ConstructsADictionaryFromTuples() { 
       Dict(
         (1, "Hi"),
